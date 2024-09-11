@@ -1,6 +1,8 @@
 import os   # 导入 os 模块，用于文件和目录操作
 from difflib import SequenceMatcher
 import cProfile
+import pstats
+import io
 
 def read_file(filepath):
     """
@@ -82,9 +84,22 @@ reference_file = input("请输入参考文件的完整路径：") #'D:\作业\�
 # 创建一个Profile对象，并运行主函数进行性能分析
 profiler = cProfile.Profile()
 profiler.enable()  # 开始性能分析
-main(directory, reference_file) #调用主函数
+main(directory, reference_file) # 调用主函数
 profiler.disable()  # 结束性能分析
-profiler.print_stats(sort='time')  # 打印分析结果，按运行时间排序
+
+# 使用 StringIO 来捕获分析结果到内存中，便于处理
+s = io.StringIO()
+sortby = 'cumulative'  # 可以更改为 'time', 'calls' 等
+ps = pstats.Stats(profiler, stream=s).sort_stats(sortby)
+ps.print_stats()  # 打印所有统计数据
+# 过滤输出，只显示包含特定函数名的行
+filter_terms = ('read_file', 'calculate_similarity', 'compare_files', 'main')  # 函数名
+column_titles = "    调用次数| 总时间 | 平均时间 | 累积时间 | 平均累积时间 | 函数位置和名称\n"
+print('\nFiltered stats:')
+print(column_titles)
+for line in s.getvalue().split('\n'):
+    if any(term in line for term in filter_terms):
+        print(line)
 
 # ncalls：表示函数调用的次数；
 #
