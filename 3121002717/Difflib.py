@@ -77,8 +77,8 @@ def main(directory, reference_file):
 
 
 # 设置文件夹和参考文件的路径
-directory = input("请输入文件存放的目录路径：") #'D:\\作业\\软件工程\\zhiyou\\测试文本'
-reference_file = input("请输入参考文件的完整路径：") #'D:\\作业\\软件工程\\zhiyou\\测试文本\\orig.txt'
+directory = input("请输入文件存放的目录路径：") #'D:\作业\软件工程\zhiyou\测试文本'
+reference_file = input("请输入参考文件的完整路径：") #'D:\作业\软件工程\zhiyou\测试文本\orig.txt'
 # 创建一个Profile对象，并运行主函数进行性能分析
 profiler = cProfile.Profile()
 profiler.enable()  # 开始性能分析
