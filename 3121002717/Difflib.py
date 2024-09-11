@@ -1,6 +1,6 @@
 import os
 from difflib import SequenceMatcher
-
+import cProfile
 
 def read_file(filepath):
     """
@@ -77,6 +77,10 @@ def main(directory, reference_file):
 
 
 # 设置文件夹和参考文件的路径
-directory = 'D:\\作业\\软件工程\\zhiyou\\测试文本'
-reference_file = 'D:\\作业\\软件工程\\zhiyou\\测试文本\\orig.txt'
-main(directory, reference_file)
+directory = 'D:\\作业\\软件工程\\zhiyou\\3121002717\\测试文本'
+reference_file = 'D:\\作业\\软件工程\\zhiyou\\3121002717\\测试文本\\orig.txt'
+profiler = cProfile.Profile()
+profiler.enable()  # 开始性能分析
+main(directory, reference_file) #运行主函数
+profiler.disable()  # 结束性能分析
+profiler.print_stats(sort='time')  # 打印分析结果，按运行时间排序
